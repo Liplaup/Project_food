@@ -1,0 +1,5 @@
+{
+    "Poulet": {"calories": 165, "protéines": 31, "lipides": 3.6, "glucides": 0},
+    "Riz": {"calories": 130, "protéines": 2.7, "lipides": 0.3, "glucides": 28},
+    "Brocoli": {"calories": 55, "protéines": 3.7, "lipides": 0.6, "glucides": 11}
+}
