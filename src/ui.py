@@ -1,6 +1,6 @@
 import streamlit as st
 from calculator import calculate_nutrition
-from database import load_food_data
+from database import load_food_data, get_food_info_from_api
 
 def display_app():
     st.title("Calcul des besoins nutritionnels")
@@ -24,20 +24,28 @@ def display_app():
         st.write(f"**Lipides**: {besoins['lipides']} g")
         st.write(f"**Glucides**: {besoins['glucides']} g")
 
-    # Charger les aliments à partir de la base de données
-    food_data = load_food_data()
+        st.subheader("Vitamines")
+        for vitamine, valeur in besoins["vitamines"].items():
+            st.write(f"**{vitamine.capitalize()}**: {valeur} mg/µg")
 
-    st.sidebar.header("Sélectionner un aliment")
-    food_list = list(food_data.keys())
-    selected_food = st.sidebar.selectbox("Choisissez un aliment", food_list)
+        st.subheader("Minéraux")
+        for mineral, valeur in besoins["mineraux"].items():
+            st.write(f"**{mineral.capitalize()}**: {valeur} mg/µg")
 
-    if selected_food:
-        food_info = food_data[selected_food]
-        st.subheader(f"Informations nutritionnelles pour {selected_food}")
-        st.write(f"**Calories**: {food_info['calories']} kcal")
-        st.write(f"**Protéines**: {food_info['protéines']} g")
-        st.write(f"**Lipides**: {food_info['lipides']} g")
-        st.write(f"**Glucides**: {food_info['glucides']} g")
+    st.sidebar.header("Rechercher un aliment")
+    food_name = st.sidebar.text_input("Nom de l'aliment", "")
+
+    if food_name:
+        food_info = get_food_info_from_api(food_name)
+        if food_info:
+            st.subheader(f"Informations nutritionnelles pour {food_info['product_name']}")
+            st.write(f"**Calories**: {food_info['calories']} kcal")
+            st.write(f"**Protéines**: {food_info['protéines']} g")
+            st.write(f"**Lipides**: {food_info['lipides']} g")
+            st.write(f"**Glucides**: {food_info['glucides']} g")
+            st.write(f"**Nutri-Score**: {food_info['nutrition_grades']}")
+        else:
+            st.write("Aucune information disponible pour cet aliment.")
 
 if __name__ == "__main__":
     display_app()

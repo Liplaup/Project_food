@@ -13,7 +13,12 @@ def main():
     besoins = calculate_nutrition(poids, taille, age, sexe, activite)
     print("\nVoici vos besoins nutritionnels journaliers :")
     for key, value in besoins.items():
-        print(f"{key.capitalize()} : {value} g")
+        if key in ["vitamines", "mineraux"]:
+            print(f"\n{key.capitalize()} :")
+            for sub_key, sub_value in value.items():
+                print(f"  {sub_key.capitalize()} : {sub_value} mg/µg")
+        else:
+            print(f"{key.capitalize()} : {value} g")
 
 if __name__ == "__main__":
     main()

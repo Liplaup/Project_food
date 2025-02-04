@@ -1,6 +1,6 @@
 def calculate_nutrition(poids, taille, age, sexe, activite):
     """
-    Calcule les besoins en macronutriments en fonction des paramètres de l'utilisateur.
+    Calcule les besoins en macronutriments et micronutriments en fonction des paramètres de l'utilisateur.
     """
     # Estimation du métabolisme basal (Harris-Benedict)
     if sexe == "h":
@@ -17,4 +17,38 @@ def calculate_nutrition(poids, taille, age, sexe, activite):
     lipides = poids * 0.8  # 0.8g par kg
     glucides = (bmr - (protéines * 4 + lipides * 9)) / 4  # Le reste en glucides
 
-    return {"calories": round(bmr, 2), "protéines": round(protéines, 2), "lipides": round(lipides, 2), "glucides": round(glucides, 2)}
+    # Ajout des besoins en vitamines et minéraux (exemple)
+    vitamines = {
+        "vitamine A": 900,  # µg
+        "vitamine C": 90,  # mg
+        "vitamine D": 20,  # µg
+        "vitamine E": 15,  # mg
+        "vitamine K": 120,  # µg
+        "vitamine B1": 1.2,  # mg
+        "vitamine B2": 1.3,  # mg
+        "vitamine B3": 16,  # mg
+        "vitamine B5": 5,  # mg
+        "vitamine B6": 1.3,  # mg
+        "vitamine B7": 30,  # µg
+        "vitamine B9": 400,  # µg
+        "vitamine B12": 2.4  # µg
+    }
+
+    mineraux = {
+        "calcium": 1000,  # mg
+        "fer": 8,  # mg
+        "magnésium": 400,  # mg
+        "phosphore": 700,  # mg
+        "potassium": 4700,  # mg
+        "sodium": 1500,  # mg
+        "zinc": 11  # mg
+    }
+
+    return {
+        "calories": round(bmr, 2),
+        "protéines": round(protéines, 2),
+        "lipides": round(lipides, 2),
+        "glucides": round(glucides, 2),
+        "vitamines": vitamines,
+        "mineraux": mineraux
+    }
