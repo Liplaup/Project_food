@@ -45,3 +45,21 @@ def get_food_info_from_api(food_name):
             }
     return None
 
+import myfitnesspal
+
+def get_food_info_from_myfitnesspal(food_name):
+    """Recherche un aliment par son nom et récupère ses informations nutritionnelles depuis MyFitnessPal."""
+    client = myfitnesspal.Client('your_username', 'your_password')
+    food = client.get_food_search_results(food_name)
+    
+    if food:
+        food_item = food[0]  # Prenons le premier résultat pour simplifier
+        return {
+            "product_name": food_item.name,
+            "calories": food_item.calories,
+            "protéines": food_item.protein,
+            "lipides": food_item.fat,
+            "glucides": food_item.carbohydrates,
+            "nutrition_grades": "Non disponible"  # MyFitnessPal ne fournit pas de Nutri-Score
+        }
+    return None
